@@ -50,7 +50,11 @@ public class SeedControllerKin : MonoBehaviour
                 rb.AddForce(transform.up * propellerStrength);
 
             //Rotate the seed around the Z axis according to the user's input
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z + rotationDirection * rotationSpeed * Time.deltaTime);
+            transform.eulerAngles = new Vector3(
+                transform.eulerAngles.x, 
+                transform.eulerAngles.y, 
+                transform.eulerAngles.z + rotationDirection * rotationSpeed * Time.deltaTime
+                );
 
             Vector3 totalVelocity = Vector2.zero;
 
