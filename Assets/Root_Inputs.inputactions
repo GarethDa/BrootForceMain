@@ -1,0 +1,55 @@
+{
+    "version": 1,
+    "name": "Root_Inputs",
+    "maps": [
+        {
+            "name": "Main Root",
+            "id": "212f14b3-518e-462c-8332-c0cad8f689e6",
+            "actions": [
+                {
+                    "name": "Turn_Clockwise",
+                    "type": "Button",
+                    "id": "61a12553-e027-4242-bdb7-69970cc797bd",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Turn_Counterclockwise",
+                    "type": "Button",
+                    "id": "66267c51-884e-4216-83a8-dfecb0ca3510",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "0fa88a0b-b03d-4674-97e5-a01593c45bb5",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Turn_Clockwise",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7a18dbed-14fc-41c8-855c-76bd061532d8",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Turn_Counterclockwise",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

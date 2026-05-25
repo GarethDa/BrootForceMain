@@ -1,5 +1,6 @@
 using UnityEngine;
 
+//https://www.youtube.com/watch?v=zit45k6CUMk
 public class ParallaxBG : MonoBehaviour
 {
     private float length;

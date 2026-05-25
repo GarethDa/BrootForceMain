@@ -16,6 +16,12 @@ public class SeedController : MonoBehaviour
     public float launchStrength = 1000;
     public Launcher seedLauncher;
 
+    public float standardDamping = 5f;
+    public float maxDamping = 30f;
+    public float minDamping = 1f;
+    public float gravityScale = 0.1f;
+    public float maxGravityScale = 5f;
+    public float flightSpeed = 10f;
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
@@ -24,6 +30,7 @@ public class SeedController : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0;
+        //rb.linearDamping = standardDamping;
     }
 
     // Update is called once per frame
@@ -34,14 +41,43 @@ public class SeedController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (usingPropeller)
-            rb.AddForce(transform.up * propellerStrength);
+        if (launched)
+        {
+            if (usingPropeller)
+                rb.AddForce(transform.up * propellerStrength);
             //rb.AddForce(new Vector2(0f, 50f));
 
-        rb.angularVelocity = rotationDirection * rotationSpeed;
+            rb.angularVelocity = rotationDirection * rotationSpeed;
 
-        //rb.AddTorque(rotationDirection * rotationSpeed * Time.fixedDeltaTime, ForceMode2D.Force);
+            rb.AddForce(transform.right * flightSpeed);
 
+            float rightY = transform.right.y;
+
+            if (rightY > 0)
+            {
+                float forwardSpeed = rb.linearVelocity.x;
+                float horizontalSlowdown = forwardSpeed * rightY * maxDamping;
+
+                rb.AddForce(Vector2.left * horizontalSlowdown);
+            }
+
+            else
+            {
+            }
+
+            //float currentDrag = transform.eulerAngles.z;
+
+            //if (currentDrag >= 180)
+            //    currentDrag -= 360;
+
+            //currentDrag *= dragPerDegree;
+
+            //rb.linearDamping = standardDamping;
+
+            //Debug.Log(currentDrag);
+            //float forwardSpeed = Vector2.Dot(rb.linearVelocity, transform.right);
+            //rb.AddForce(transform.up * (forwardSpeed * liftCoefficient));
+        }
     }
 
     private void InputPass()
@@ -84,12 +120,14 @@ public class SeedController : MonoBehaviour
         if (!launched)
         {
             launched = true;
-            rb.gravityScale = 1;
+            rb.gravityScale = gravityScale;
             seedLauncher.StopRotating();
+            transform.rotation = seedLauncher.transform.rotation;
 
             //rb.linearVelocity = seedLauncher.GetForward() * launchStrength;
 
-            rb.AddForce(seedLauncher.GetForward() * launchStrength);
+            //rb.linearVelocity = 100 * transform.right;
+            //rb.AddForce(transform.right * launchStrength);
         }
     }
 }
