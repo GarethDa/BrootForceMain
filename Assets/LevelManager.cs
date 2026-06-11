@@ -43,19 +43,13 @@ public class LevelManager : MonoBehaviour
     }
 
     public Sprite GetBiomeBackground()
-    {
-        return currentBiome.repeatableTexture;
-    }
+    { return currentBiome.repeatableTexture; }
 
     public float GetBiomeSlowdown()
-    {
-        return currentBiome.slowdownPercentage;
-    }
+    { return currentBiome.slowdownPercentage; }
 
     public BiomeType GetCurrentBiome()
-    {
-        return currentBiome;
-    }
+    { return currentBiome; }
 
     public enum BiomeTypes
     {

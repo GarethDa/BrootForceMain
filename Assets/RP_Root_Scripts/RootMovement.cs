@@ -22,6 +22,10 @@ public class RootMovement : MonoBehaviour
     public TMP_Text breakingText;
     public float breakingStrength = 1;
 
+    [Header("Water Collection Properties")]
+    public TMP_Text waterText;
+    private string waterTextPreamble;
+
     //Referenced components
     private PlayerInput playerInput;
     private Rigidbody2D rb;
@@ -36,6 +40,7 @@ public class RootMovement : MonoBehaviour
     private bool breakingObstacle = false;
     private bool breakThisFrame = false;
     private GameObject currentObstacle;
+    private float waterThisRound = 0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -51,6 +56,9 @@ public class RootMovement : MonoBehaviour
 
         //Start the back renderer with two nodes
         backRenderer.positionCount = 2;
+
+        waterTextPreamble = waterText.text;
+        waterText.text = waterTextPreamble + waterThisRound;
     }
 
     // Update is called once per frame
@@ -180,42 +188,42 @@ public class RootMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Collided!");
-        if (collision.gameObject.tag.Equals("Obstacle"))
-        {
-            Debug.Log("It a obstacle");
-            breakingText.gameObject.SetActive(true);
-            currentObstacleStrength = collision.gameObject.GetComponent<ObstacleValues>().breakStrength;
-            breakingText.text = "Strength to break: " + currentObstacleStrength;
-            breakingObstacle = true;
-            currentObstacle = collision.gameObject;
-        }
-    }
+        //Old version which used tags
+        //if (collision.gameObject.tag.Equals("Obstacle"))
 
-    /*
-    private void OnCol(Collision2D collision)
-    {
-        Debug.Log("Collided!");
-        if (collision.gameObject.tag.Equals("Obstacle"))
+        //If we ran into an obstacle
+        if (collision.gameObject.TryGetComponent(out ObstacleType obsType))
         {
-            Debug.Log("It a obstacle");
+            //Reveal the breaking UI, set the value to the breaking strength of this obstacle.
             breakingText.gameObject.SetActive(true);
-            currentObstacleStrength = collision.gameObject.GetComponent<ObstacleValues>().breakStrength;
+            currentObstacleStrength = obsType.breakStrength;
             breakingText.text = "Strength to break: " + currentObstacleStrength;
+            
+            //Set breakingObstacle to true in order to disable the movement of the root, and set the current obstacle.
             breakingObstacle = true;
             currentObstacle = collision.gameObject;
         }
+
+        //If we ran into a collectible
+        else if (collision.gameObject.TryGetComponent(out CollectibleType colType))
+        {
+            //If it's water, add this to the water collected this round and update the UI.
+            if (colType.thisType.ToString().Equals("water"))
+            {
+                waterThisRound += colType.GetValue();
+                waterText.text = waterTextPreamble + waterThisRound;
+            }
+            
+            //Deactivate this collectible so that it can't be collected again.
+            colType.Deactivate();
+        }
     }
-    */
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-
-        Debug.Log("hit barrier");
-        if (collision.gameObject.tag.Equals("Barrier"))
+        //Collision logic for barriers (only do this if we aren't currently breaking an obstacle)
+        if (collision.gameObject.tag.Equals("Barrier") && !breakingObstacle)
         {
-            //Debug.Log("hit barrier");
-
             //Grab the normal, use this to find the line perpendicular to the collision 
             //(e.g. the line that runs along the barrier we are colliding with
             Vector2 hitNormal = collision.contacts[0].normal;
@@ -230,8 +238,6 @@ public class RootMovement : MonoBehaviour
             //Therefore, in this case, we want to rotate the root further downward (relative to the barrier).
             if (dotProd >= 0)
             {
-                //Debug.Log("Going Down");
-
                 //Find the direction that we want the root to turn towards. In this case, we subtract the sum of the perpendicular vector and the normal vector.
                 //It's important to note that this doesn't need to be super precise, it just needs to be a vector which points in the general direction we want.
                 //This is because, the moment the root isn't touching the barrier, the rotation stops anyway.
@@ -243,8 +249,6 @@ public class RootMovement : MonoBehaviour
                 //Find the z-euler component of the rotation, since this is all we need.
                 float targetEuler = targetRot.eulerAngles.z;
                 
-                //Debug.Log(targetEuler);
-
                 //Turn the root at the pre-determined turn speed.
                 transform.eulerAngles = new Vector3(
                     transform.eulerAngles.x,
@@ -257,14 +261,10 @@ public class RootMovement : MonoBehaviour
             //Therefore, in this case, we want to rotate the root further upward (relative to the barrier).
             else
             {
-                //Debug.Log("Going Up");
-
                 //Same logic as above, but we are adding instead of subtracting since we want to go upwards relative to the barrier.
                 Vector3 turnDir = (transform.position + ((Vector3)normalPerp + (0.5f * (Vector3)hitNormal)));
                 Quaternion targetRot = Quaternion.LookRotation(turnDir);
                 float targetEuler = targetRot.eulerAngles.z;
-
-                //Debug.Log(targetEuler);
 
                 //Turn the root at the pre-determined turn speed.
                 transform.eulerAngles = new Vector3(

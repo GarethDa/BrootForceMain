@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class SpawningManager : MonoBehaviour
 {
-    public List<GameObject> obstacleObjects;
+    public List<GameObject> interactiveObjects;
     public GameObject spawningWidth;
     public GameObject backgroundObject;
     public Camera playerCam;
@@ -32,8 +32,8 @@ public class SpawningManager : MonoBehaviour
         backgroundRenderer.size = new Vector2(chunkHeight, chunkHeight);
 
         //Add each spawnable object type's spawn chance to the total spawn chance
-        foreach (GameObject gObject in obstacleObjects)
-            totalSpawnChance += gObject.GetComponent<ObstacleValues>().spawnChance;
+        foreach (GameObject gObject in interactiveObjects)
+            totalSpawnChance += gObject.GetComponent<InteractiveType>().spawnChance;
 
         //This logic is all unnecessary right now, might be needed if I change the algorithm though
         /*
@@ -54,7 +54,7 @@ public class SpawningManager : MonoBehaviour
         }
 
         //For the sake of the spawning algorithm, the simplest way to guarantee that no objects overlap is to assume that
-        //there is a scenario where tow copies of the largest obstacle possible are going to be spawned side-by-side.
+        //there is a scenario where two copies of the largest obstacle possible are going to be spawned side-by-side.
         biggestLength *= 2;
         */
     }
@@ -100,14 +100,13 @@ public class SpawningManager : MonoBehaviour
             - Either add this obstacle to the list of objects to spawn and break the for loop,
             or continue on to the next obstacle type.
             */
-            foreach (GameObject gObject in obstacleObjects)
+            foreach (GameObject gObject in interactiveObjects)
             {
-                currentSpawnValue += gObject.GetComponent<ObstacleValues>().spawnChance;
+                currentSpawnValue += gObject.GetComponent<InteractiveType>().spawnChance;
 
                 if (currentSpawnValue >= spawnNumber)
                 {
                     objectsToSpawn.Add(gObject);
-                    //Debug.Log(gObject.name);
                     break;
                 }
             }
@@ -136,8 +135,8 @@ public class SpawningManager : MonoBehaviour
 
                 PolygonCollider2D objCollider = gObject.GetComponent<PolygonCollider2D>();
 
-                //Get a random object scale using the provided values from the ObstacleValues component
-                float objScale = Random.Range(gObject.GetComponent<ObstacleValues>().minScale, gObject.GetComponent<ObstacleValues>().maxScale);
+                //Get a random object scale using the provided values from the InteractiveType component
+                float objScale = Random.Range(gObject.GetComponent<InteractiveType>().minScale, gObject.GetComponent<InteractiveType>().maxScale);
 
                 //Calculate the radius of the bounding circle, to be used for avoiding overlapping objects
                 float approxRadius = Vector2.Distance(objCollider.bounds.center, objCollider.bounds.max) * objScale;
@@ -151,7 +150,7 @@ public class SpawningManager : MonoBehaviour
                     //If the new obstacle's position overlaps with this existing obstacle, then break out of this for loop
                     //and set spawnIt to false, which indicates that a new position should be generated
                     if (Vector2.Distance(spawnedObject.transform.position, spawnPos) <
-                        spawnedObject.GetComponent<ObstacleValues>().boundingRadius + approxRadius)
+                        spawnedObject.GetComponent<InteractiveType>().boundingRadius + approxRadius)
                     {
                         spawnIt = false;
                         break;
@@ -164,13 +163,22 @@ public class SpawningManager : MonoBehaviour
                     //Instantiate the obstacle at the randomized position, make it a child of the obstacle holder
                     GameObject newObject = Instantiate(gObject, spawnPos, Quaternion.identity, obstacleHolder.transform);
                     
-                    //Set the bounding radius. This makes it very simple to grab his radius for future overlap calculations
+                    //Set the bounding radius. This makes it very simple to grab this radius for future overlap calculations
                     //instead of having to re-calculate it every time
-                    newObject.GetComponent<ObstacleValues>().boundingRadius = approxRadius;
+                    newObject.GetComponent<InteractiveType>().boundingRadius = approxRadius;
 
                     //Set the scale and randomize the rotation
                     newObject.transform.localScale = new Vector3(objScale, objScale, 1);
-                    newObject.transform.eulerAngles = new Vector3(0, 0, Random.Range(0, 360));
+
+                    //If we're working with a collectible here, set its value based on the scale
+                    //(if the collectible isn't set to have its value align with scale, then SetThisValue just sets
+                    //the value to the pre-selected value without multiplying by the scale.
+                    if (newObject.TryGetComponent(out CollectibleType colType))
+                        colType.SetThisValue(objScale);
+
+                    //If the object has random rotation selected, then randomly rotate it
+                    if (newObject.GetComponent<InteractiveType>().randomRotation)
+                        newObject.transform.eulerAngles = new Vector3(0, 0, Random.Range(0, 360));
 
                     //Add the obstacle to the list of spawned obstacles for this chunk
                     spawnedObstacles.Add(newObject);
