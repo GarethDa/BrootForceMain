@@ -1,7 +1,20 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement name="UI_Panel" style="flex-grow: 1; background-color: rgb(188, 105, 0); position: absolute; height: 93px; width: 485px; top: 28px; left: 28px; border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px;">
+    <ui:VisualElement name="UI_Panel" data-source="project://database/Assets/defaultPlayerData.asset?fileID=11400000&amp;guid=8d00abb93eacf5546ac8d5c047e42c6b&amp;type=2#defaultPlayerData" style="flex-grow: 1; background-color: rgb(188, 105, 0); position: absolute; height: 93px; width: 485px; top: 28px; left: 28px; border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px;">
         <ui:VisualElement name="UI_Icon" style="flex-grow: 1; background-color: rgba(152, 55, 55, 0.87); position: absolute; height: 63px; width: 79px; top: 17px; left: 21px; background-image: url(&quot;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=6936960519852013934&amp;guid=b96f42ed6f887484782b8a35ada5ef2a&amp;type=3#arrow-up@2x&quot;); -unity-background-image-tint-color: rgb(255, 0, 0); -unity-background-scale-mode: scale-and-crop; flex-direction: column; justify-content: space-between; align-self: stretch;" />
-        <ui:Label text="Boost" name="Text" style="margin-left: 99px; height: 27px; -unity-text-align: upper-center; white-space: pre-wrap; text-overflow: clip; -unity-font-style: bold;" />
-        <ui:ProgressBar value="50" name="BoostBar" style="position: absolute; top: 33px; left: 102px; width: 371px; transition-property: all; transition-duration: 0s; transition-timing-function: ease; transition-delay: 0s; background-color: rgba(0, 0, 0, 0); -unity-background-image-tint-color: rgba(62, 255, 0, 0); border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); opacity: 1; cursor: initial; transform-origin: center;" />
+        <ui:Label text="Boost" name="BoostText" style="margin-left: 99px; height: 27px; -unity-text-align: upper-center; white-space: pre-wrap; text-overflow: clip; -unity-font-style: bold;" />
+        <ui:ProgressBar value="50" name="BoostBar" style="position: absolute; top: 33px; left: 102px; width: 371px; transition-property: all; transition-duration: 0s; transition-timing-function: ease; transition-delay: 0s; background-color: rgba(0, 0, 0, 0); -unity-background-image-tint-color: rgba(62, 255, 0, 0); border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); opacity: 1; cursor: initial; transform-origin: center;">
+            <Bindings>
+                <ui:DataBinding property="highValue" data-source-path="maxBoost" binding-mode="ToTarget" />
+            </Bindings>
+        </ui:ProgressBar>
+    </ui:VisualElement>
+    <ui:VisualElement name="UI_Panel" data-source="project://database/Assets/defaultPlayerData.asset?fileID=11400000&amp;guid=8d00abb93eacf5546ac8d5c047e42c6b&amp;type=2#defaultPlayerData" style="flex-grow: 1; background-color: rgb(188, 105, 0); position: absolute; height: 93px; width: 245px; top: 19px; left: 1040px; border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px;">
+        <ui:VisualElement name="UI_Icon" style="flex-grow: 1; background-color: rgba(152, 55, 55, 0.87); position: absolute; height: 63px; width: 79px; top: 17px; left: 21px; background-image: url(&quot;project://database/Assets/RP_Textures/waterDrop.png?fileID=2800000&amp;guid=5cefa360130c8a8468e9bae22ee1e580&amp;type=3#waterDrop&quot;); -unity-background-image-tint-color: rgb(255, 255, 255); -unity-background-scale-mode: scale-and-crop; flex-direction: column; justify-content: space-between; align-self: stretch;" />
+        <ui:Label text="Water" name="WaterText" style="margin-left: 99px; height: 27px; -unity-text-align: upper-center; white-space: pre-wrap; text-overflow: clip; -unity-font-style: bold;" />
+        <ui:IntegerField value="42" name="WaterValue" style="position: relative; top: 3px; left: 139px; width: 50px; align-items: flex-start; flex-direction: row; background-color: rgba(0, 0, 0, 0);">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="waterLevel" binding-mode="ToTarget" />
+            </Bindings>
+        </ui:IntegerField>
     </ui:VisualElement>
 </ui:UXML>
