@@ -1582,10 +1582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a938e77d2881eb47a9028cb1ac18fc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameData:
-    totalWater: 0
-    currentWater: 0
-    previousLevelWater: 0
+  gameData: {fileID: 11400000, guid: c0ccf0347186c494c8c39167b7086b82, type: 2}
 --- !u!114 &1824852834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1604,6 +1601,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ea16e6d1278a8c94295fb5cdc30feb9b, type: 2}
   biome: 0
   timerText: {fileID: 2129825071}
+  levelDuration: 20
 --- !u!1 &1969314904
 GameObject:
   m_ObjectHideFlags: 0

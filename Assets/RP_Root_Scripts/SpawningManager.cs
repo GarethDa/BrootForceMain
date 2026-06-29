@@ -34,29 +34,6 @@ public class SpawningManager : MonoBehaviour
         //Add each spawnable object type's spawn chance to the total spawn chance
         foreach (GameObject gObject in interactiveObjects)
             totalSpawnChance += gObject.GetComponent<InteractiveType>().spawnChance;
-
-        //This logic is all unnecessary right now, might be needed if I change the algorithm though
-        /*
-        //Look through each obstacle, find the largest possible length of an obstacle.
-        //Logic: the largest possible obstacle will have either the longest width or height, multiplied by the maximum scale
-        //as defined by its ObstacleValues component.
-        foreach (GameObject gObject in obstacleObjects)
-        {
-            float largestScale = gObject.GetComponent<ObstacleValues>().maxScale;
-
-            if (gObject.GetComponent<PolygonCollider2D>().bounds.size.x * largestScale > biggestLength)
-                biggestLength = gObject.GetComponent<PolygonCollider2D>().bounds.size.x * largestScale;
-
-            if (gObject.GetComponent<PolygonCollider2D>().bounds.size.y * largestScale > biggestLength)
-                biggestLength = gObject.GetComponent<PolygonCollider2D>().bounds.size.y * largestScale;
-
-            totalSpawnChance += gObject.GetComponent<ObstacleValues>().spawnChance;
-        }
-
-        //For the sake of the spawning algorithm, the simplest way to guarantee that no objects overlap is to assume that
-        //there is a scenario where two copies of the largest obstacle possible are going to be spawned side-by-side.
-        biggestLength *= 2;
-        */
     }
 
     // Update is called once per frame

@@ -23,7 +23,7 @@ public class CollectibleType : InteractiveType
     //Method for setting the value, takes a scale as input (but doesn't necessarily use it)
     public void SetThisValue(float scale)
     {
-        //If the value is set to align with the scale, then multiply the value by the scale
+        //If the value is set to align with the scale, then multiply the value by the scale (with some extra math to round to two decimal points)
         if (valueWithScale)
             thisValue = Mathf.Round(scale * collectionValue * 100f) / 100f;
 

@@ -14,10 +14,11 @@ public class LevelManager : MonoBehaviour
 
     [Header("Timer UI variables (this will be changed when we work on UI)")]
     public TMP_Text timerText;
+    public float levelDuration = 20f;
+
     //public float timerUpdateTime = 0.5f;
     private string timerTextPreamble;
 
-    private float levelDuration = 20f;
     private float currentTimer;
 
     private BiomeType currentBiome;
