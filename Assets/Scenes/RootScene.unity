@@ -968,56 +968,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &897220544
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 897220546}
-  - component: {fileID: 897220545}
-  m_Layer: 0
-  m_Name: LevelManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &897220545
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 897220544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 320b891db9e3cb143863a90eba802332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  biomes:
-  - {fileID: 11400000, guid: bccb3234e3e09384ebefccc8b7bae88a, type: 2}
-  - {fileID: 11400000, guid: 0911ccb2a05a5d84e9ef35668c687353, type: 2}
-  - {fileID: 11400000, guid: ea16e6d1278a8c94295fb5cdc30feb9b, type: 2}
-  biome: 0
-  timerText: {fileID: 0}
---- !u!4 &897220546
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 897220544}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &932962700
 GameObject:
   m_ObjectHideFlags: 0
@@ -1571,7 +1521,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1824852831}
   - component: {fileID: 1824852829}
-  - component: {fileID: 1824852832}
+  - component: {fileID: 1824852834}
   - component: {fileID: 1824852833}
   m_Layer: 0
   m_Name: ManagerHolder
@@ -1601,8 +1551,8 @@ MonoBehaviour:
   backgroundObject: {fileID: 932962700}
   playerCam: {fileID: 406732953}
   numSpawnRowsColumns: 20
-  minObstaclesPerChunk: 200
-  maxObstaclesPerChunk: 400
+  minObstaclesPerChunk: 50
+  maxObstaclesPerChunk: 100
   obstacleHolder: {fileID: 28526173}
   barrierObject: {fileID: 1068489873}
 --- !u!4 &1824852831
@@ -1620,7 +1570,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1824852832
+--- !u!114 &1824852833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824852828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a938e77d2881eb47a9028cb1ac18fc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameData:
+    totalWater: 0
+    currentWater: 0
+    previousLevelWater: 0
+--- !u!114 &1824852834
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1638,22 +1604,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ea16e6d1278a8c94295fb5cdc30feb9b, type: 2}
   biome: 0
   timerText: {fileID: 2129825071}
---- !u!114 &1824852833
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1824852828}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a938e77d2881eb47a9028cb1ac18fc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameData:
-    totalWater: 0
-    currentWater: 0
-    previousLevelWater: 0
 --- !u!1 &1969314904
 GameObject:
   m_ObjectHideFlags: 0
@@ -1791,63 +1741,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1969314904}
   m_CullTransparentMesh: 1
---- !u!1 &2078220286
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2078220288}
-  - component: {fileID: 2078220287}
-  m_Layer: 0
-  m_Name: SpawnManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &2078220287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2078220286}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9938566cb30edfb40b72e73d2d562016, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactiveObjects:
-  - {fileID: 7792907975721304059, guid: 4b5cf9fe6f27dd54fa55542656bcc47f, type: 3}
-  - {fileID: 7792907975721304059, guid: c84f9ee051d2f754191991798c4a3c4f, type: 3}
-  - {fileID: 7792907975721304059, guid: 3666ca5d7de737445b3940dab379bc64, type: 3}
-  - {fileID: 7792907975721304059, guid: 56f763958cfd86e4a920bf0f275d1b34, type: 3}
-  spawningWidth: {fileID: 109950931}
-  backgroundObject: {fileID: 932962700}
-  playerCam: {fileID: 406732953}
-  numSpawnRowsColumns: 20
-  minObstaclesPerChunk: 200
-  maxObstaclesPerChunk: 400
-  obstacleHolder: {fileID: 28526173}
-  barrierObject: {fileID: 1068489873}
---- !u!4 &2078220288
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2078220286}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2129825069
 GameObject:
   m_ObjectHideFlags: 0
@@ -1999,6 +1892,4 @@ SceneRoots:
   - {fileID: 1068489876}
   - {fileID: 1074438577}
   - {fileID: 961936994}
-  - {fileID: 2078220288}
-  - {fileID: 897220546}
   - {fileID: 1824852831}
