@@ -1,14 +1,28 @@
+using System;
 using UnityEngine;
 using System.Collections.Generic;
+using TMPro;
 
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance { get; private set; }
+    public static event Action OnLevelEnded;
 
+    [Header("Biome spawning variables")]
     public List<BiomeType> biomes;
     public BiomeTypes biome;
 
+    [Header("Timer UI variables (this will be changed when we work on UI)")]
+    public TMP_Text timerText;
+    //public float timerUpdateTime = 0.5f;
+    private string timerTextPreamble;
+
+    private float levelDuration = 20f;
+    private float currentTimer;
+
     private BiomeType currentBiome;
+
+    private bool levelEnded = false;
 
     private void Awake()
     {
@@ -24,6 +38,9 @@ public class LevelManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        timerTextPreamble = timerText.text;
+        currentTimer = levelDuration;
+
         //Grab the correct biome from the list of biome types, based on the biome type selected from the
         //BiomeTypes enum.
         foreach (BiomeType thisBiome in biomes)
@@ -39,7 +56,18 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        currentTimer -= Time.deltaTime;
+
+        timerText.text = timerTextPreamble + Mathf.Ceil(currentTimer);
+
+        if (currentTimer <= 0 && !levelEnded)
+        {
+            levelEnded = true;
+            OnLevelEnded?.Invoke();
+            Time.timeScale = 0f;
+            //****Do level switching here for now!!
+        }
+
     }
 
     public Sprite GetBiomeBackground()

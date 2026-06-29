@@ -1,6 +1,6 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 using TMPro;
 
 public class RootMovement : MonoBehaviour
@@ -25,6 +25,8 @@ public class RootMovement : MonoBehaviour
     [Header("Water Collection Properties")]
     public TMP_Text waterText;
     private string waterTextPreamble;
+
+    public static Action<float> OnWaterCollected;
 
     //Referenced components
     private PlayerInput playerInput;
@@ -212,6 +214,7 @@ public class RootMovement : MonoBehaviour
             {
                 waterThisRound += colType.GetValue();
                 waterText.text = waterTextPreamble + waterThisRound;
+                OnWaterCollected?.Invoke(colType.GetValue());
             }
             
             //Deactivate this collectible so that it can't be collected again.
