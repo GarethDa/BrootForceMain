@@ -1547,6 +1547,7 @@ MonoBehaviour:
   - {fileID: 7792907975721304059, guid: c84f9ee051d2f754191991798c4a3c4f, type: 3}
   - {fileID: 7792907975721304059, guid: 3666ca5d7de737445b3940dab379bc64, type: 3}
   - {fileID: 7792907975721304059, guid: 56f763958cfd86e4a920bf0f275d1b34, type: 3}
+  - {fileID: 7792907975721304059, guid: 7bf30e5658483334885d77c93c6b2e8e, type: 3}
   spawningWidth: {fileID: 109950931}
   backgroundObject: {fileID: 932962700}
   playerCam: {fileID: 406732953}
@@ -1601,7 +1602,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ea16e6d1278a8c94295fb5cdc30feb9b, type: 2}
   biome: 0
   timerText: {fileID: 2129825071}
-  levelDuration: 20
+  levelDuration: 200
 --- !u!1 &1969314904
 GameObject:
   m_ObjectHideFlags: 0

@@ -44,7 +44,7 @@ public class SpawningManager : MonoBehaviour
             currentMinY = playerCam.transform.position.y - playerCam.orthographicSize;
 
         //Once the root gets close enough to the new chunk, populate the chunk with random spawns (e.g. SpawnChunk())
-        if (currentMinY <= (-chunkHeight * currentChunkNum) + (playerCam.orthographicSize * 2))
+        if (currentMinY <= (-chunkHeight * (currentChunkNum - 1)) + (playerCam.orthographicSize * 2))
         {
             SpawnChunk();
             currentChunkNum++;
@@ -110,7 +110,7 @@ public class SpawningManager : MonoBehaviour
 
                 Vector2 spawnPos = new Vector2(spawnX, spawnY);
 
-                PolygonCollider2D objCollider = gObject.GetComponent<PolygonCollider2D>();
+                Collider2D objCollider = gObject.GetComponent<Collider2D>();
 
                 //Get a random object scale using the provided values from the InteractiveType component
                 float objScale = Random.Range(gObject.GetComponent<InteractiveType>().minScale, gObject.GetComponent<InteractiveType>().maxScale);
@@ -120,17 +120,24 @@ public class SpawningManager : MonoBehaviour
 
                 bool spawnIt = true;
 
-                //Look through each object that's already been spawned in this chunk (starts at zero)
-                foreach (GameObject spawnedObject in spawnedObstacles)
-                {
+                //Check if the object to be spawned is a moving type
+                gObject.TryGetComponent(out MovingObstacleType moveType);
 
-                    //If the new obstacle's position overlaps with this existing obstacle, then break out of this for loop
-                    //and set spawnIt to false, which indicates that a new position should be generated
-                    if (Vector2.Distance(spawnedObject.transform.position, spawnPos) <
-                        spawnedObject.GetComponent<InteractiveType>().boundingRadius + approxRadius)
+                //If the object is a moving type then we don't need to worry about overlapping; otherwise, do the overlapping check
+                if (moveType is null)
+                {
+                    //Look through each object that's already been spawned in this chunk (starts at zero)
+                    foreach (GameObject spawnedObject in spawnedObstacles)
                     {
-                        spawnIt = false;
-                        break;
+
+                        //If the new obstacle's position overlaps with this existing obstacle, then break out of this for loop
+                        //and set spawnIt to false, which indicates that a new position should be generated
+                        if (Vector2.Distance(spawnedObject.transform.position, spawnPos) <
+                            spawnedObject.GetComponent<InteractiveType>().boundingRadius + approxRadius)
+                        {
+                            spawnIt = false;
+                            break;
+                        }
                     }
                 }
 
@@ -146,6 +153,12 @@ public class SpawningManager : MonoBehaviour
 
                     //Set the scale and randomize the rotation
                     newObject.transform.localScale = new Vector3(objScale, objScale, 1);
+
+                    if (moveType is not null)
+                    {
+                        moveType.SetupPath(spawnPos);
+                        moveType.StartMoving();
+                    }
 
                     //If we're working with a collectible here, set its value based on the scale
                     //(if the collectible isn't set to have its value align with scale, then SetThisValue just sets
