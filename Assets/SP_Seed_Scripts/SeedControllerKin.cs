@@ -98,21 +98,40 @@ public class SeedControllerKin : MonoBehaviour
         {
             float currentAngle = transform.eulerAngles.z;
 
+            //Convert to +/- 180 degree range instead of 0-360 degree range
             if (currentAngle > 180)
                 currentAngle -= 360;
 
+            //Find the difference between 90 degrees and the pre-determined crash angle.
+            //crashDifference will be used to ensure that the player isn't crashing while facing backwards.
             float crashDifference = 90 - crashAngle;
 
+            //Check to see if the player is exceeding the crash angle from either the forward or backwards direction.
+            //Logic: the current angle needs to be exceeding the crash angle, but no greater than the crash angle reflected (e.g. going the other way)
+            //For example: given a crashAngle of 80, if the player is moving forward, then they would crash anywhere from 80-90 degress.
+            //If the player is moving backwards, they would crash anywhere from 90-100 degrees.
             if (Mathf.Abs(currentAngle) >= crashAngle && Mathf.Abs(currentAngle) <= 90 + crashDifference)
             {
                 HandleCrash();
             }
-
+            /*
             else
             {
-                rb.MovePosition(rb.position + new Vector2(0, 10));
+                Vector2 collisionNormal = collision.contacts[0].normal;
+
+                transform.position += (Vector3)(collisionNormal * 0.5f);
+                //rb.MovePosition(rb.position + new Vector2(0, 10));
+
+                //Vector3 newAngle = Vector2.Reflect(transform.eulerAngles, collision.contacts[0].normal);
+
+                //Debug.Log(transform.eulerAngles);
+                //Debug.Log(newAngle);
+
+                //transform.eulerAngles = newAngle;
+
                 transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, -transform.eulerAngles.z);
             }
+            */
         }
     }
 

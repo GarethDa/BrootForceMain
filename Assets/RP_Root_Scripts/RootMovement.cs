@@ -204,6 +204,13 @@ public class RootMovement : MonoBehaviour
             //Set breakingObstacle to true in order to disable the movement of the root, and set the current obstacle.
             breakingObstacle = true;
             currentObstacle = collision.gameObject;
+
+            //Extra step if it's a moving obstacle type: stop the movement
+            if (collision.gameObject.TryGetComponent(out MovingObstacleType movingType))
+            {
+                Debug.Log(movingType);
+                movingType.StopMoving();
+            }
         }
 
         //If we ran into a collectible

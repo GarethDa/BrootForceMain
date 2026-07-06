@@ -2,13 +2,14 @@ using UnityEngine;
 
 public class SaveData : MonoBehaviour
 {
-    public GameData gameData = new GameData();
+    public SO_GameData gameData;
 
     private void OnEnable()
     {
         //Subscribe the relevant methods to their corresponding events
         RootMovement.OnWaterCollected += UpdateWater;
         LevelManager.OnLevelEnded += EndLevel;
+        gameData.ResetData();
     }
 
     private void Update()
@@ -26,8 +27,10 @@ public class SaveData : MonoBehaviour
 
     public void SaveGame()
     {
+        DataPackage newPackage = new DataPackage(gameData);
+
         //Convert the game data to a json and get the dedicated savegame file path
-        string saveInfo = JsonUtility.ToJson(gameData);
+        string saveInfo = JsonUtility.ToJson(newPackage, true);
         string filePath = Application.persistentDataPath + "/GameData.json";
 
         Debug.Log(filePath);
@@ -37,10 +40,15 @@ public class SaveData : MonoBehaviour
 
     public void LoadFromJson()
     {
+        //Specify the file path and read the JSON located there
         string filePath = Application.persistentDataPath + "/GameData.json";
         string saveInfo = System.IO.File.ReadAllText(filePath);
 
-        gameData = JsonUtility.FromJson<GameData>(saveInfo);
+        DataPackage loadedPackage = JsonUtility.FromJson<DataPackage>(saveInfo);
+
+        //Assign the variables from the loaded package into the scriptable object
+        gameData.LoadData(loadedPackage);
+
         Debug.Log("Loaded");
     }
 
@@ -58,12 +66,20 @@ public class SaveData : MonoBehaviour
     }
 }
 
-//This is the basic GameData object type. Every time we add a new variable/currency/etc. we can add it to this object type,
-//resulting in it being saved (still have to send the data to this script though, usually through an event call)
+//This is a local DataPackage object to be used for sending data between the savegame files and the scriptable object data holder.
+//Every time a new variable/object/etc. type needs to be tracked for save game data, it should be added here and to the scriptable object (e.g. SO_GameData).
 [System.Serializable]
-public class GameData
+public class DataPackage
 {
     public float totalWater;
     public float currentWater;
     public float previousLevelWater;
+
+    //On construction, the package object should pull all of the information from the scriptable object.
+    public DataPackage(SO_GameData sourceGameData)
+    {
+        totalWater = sourceGameData.totalWater;
+        currentWater = sourceGameData.currentWater;
+        previousLevelWater = sourceGameData.previousLevelWater;
+    }
 }
