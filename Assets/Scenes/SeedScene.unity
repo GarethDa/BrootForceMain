@@ -1852,19 +1852,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 50
-  propellerStrength: 30
-  launchStrength: 1000
   seedLauncher: {fileID: 1958088517}
+  launchStrength: 5000
+  diveBoost: 1000
   gravityScale: 1
-  thrustStrength: 200
   crashAngle: 80
+  thrustStrength: 200
   maxFuel: 100
   fuelBurnRate: 2
-  baseDragCoefficient: 0.05
+  baseDragCoefficient: 0.02
   maxDragCoefficientBoost: 0.3
   airDensity: 0.1
   surfaceArea: 5
-  diveBoost: 3000
 --- !u!4 &1779320988
 Transform:
   m_ObjectHideFlags: 0

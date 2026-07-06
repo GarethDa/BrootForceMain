@@ -10,17 +10,19 @@ public class SeedController : MonoBehaviour
     private bool launched = false;
     private bool grounded = false;
     private float currentFuel;
-
     private Rigidbody2D rb;
 
+    [Header("Basic Movement Variables")]
     public float rotationSpeed = 100;
-    public float propellerStrength = 30;
-    public float launchStrength = 1000;
     public Launcher seedLauncher;
+    public float launchStrength = 1000;
+    public float diveBoost = 5f;
     public float gravityScale = 0.1f;
-    public float thrustStrength = 10f;
     [Range(.1f, 90f)]
     public float crashAngle = 80f;
+
+    [Header("Booster Variables")]
+    public float thrustStrength = 10f;
     public float maxFuel = 100f;
     public float fuelBurnRate = 5f;
 
@@ -29,15 +31,14 @@ public class SeedController : MonoBehaviour
     public float maxDragCoefficientBoost = 0.5f;
     public float airDensity = 1.225f;
     public float surfaceArea = 5;
-    public float diveBoost = 5f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        transform.position = seedLauncher.transform.position;
+        transform.position = seedLauncher.transform.position; //Initialize with the seed sitting inside the launcher
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody2D>();
-        rb.gravityScale = 0;
+        rb.gravityScale = 0; //Gravity scale starts at 0, change it when the seed is launched
         currentFuel = maxFuel;
     }
 
@@ -110,11 +111,14 @@ public class SeedController : MonoBehaviour
                 if (rb.linearVelocity.magnitude > 0.1f)
                     rb.linearVelocity = rb.linearVelocity / (1f + (dragFactor * Time.deltaTime));
 
+                //If we're using the booster
                 if (usingPropeller)
                 {
+                    //Calculate the thrust force based on the determined thrust strength, subtract from the current fuel
                     Vector2 thrustForce = transform.right * thrustStrength;
                     currentFuel -= fuelBurnRate * Time.deltaTime;
 
+                    //If we still have fuel, apply the thrust force
                     if (currentFuel > 0)
                         rb.AddForce(thrustForce);
                     
@@ -170,10 +174,10 @@ public class SeedController : MonoBehaviour
         if (!launched)
         {
             launched = true;
-            rb.gravityScale = gravityScale;
+            rb.gravityScale = gravityScale; //Set the gravity scale
             seedLauncher.StopRotating();
-            transform.rotation = seedLauncher.transform.rotation;
-            rb.AddForce(launchStrength * transform.right, ForceMode2D.Impulse);
+            transform.rotation = seedLauncher.transform.rotation; //Align the seed's rotation with the launcher
+            rb.AddForce(launchStrength * transform.right, ForceMode2D.Impulse); //Apply the initial launch impulse
         }
     }
 
