@@ -1,9 +1,16 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
+using UnityEngine.UIElements;
 
 public class SeedController : MonoBehaviour
 {
+    //Fields so that the seed controller can use UI elements, this is probably the wrong place to put them but we don't have a seedGameManager yet
+    [SerializeField] UIController uiController;
+    [SerializeField] string m_rootElementID;
+    UIDocument m_uiDocument;
+    SO_GameData m_runtimeData;
+
     private PlayerInput playerInput;
     private bool usingPropeller = false;
     private int rotationDirection = 0;
@@ -40,6 +47,11 @@ public class SeedController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0; //Gravity scale starts at 0, change it when the seed is launched
         currentFuel = maxFuel;
+
+        //Set the UI stuff at runtime
+        m_uiDocument = GetComponent<UIDocument>();
+        m_runtimeData = uiController.RuntimePlayerData;
+        VisualElement rootElement = m_uiDocument.rootVisualElement.Q<VisualElement>(m_rootElementID);
     }
 
     // Update is called once per frame
@@ -114,15 +126,16 @@ public class SeedController : MonoBehaviour
                 //If we're using the booster
                 if (usingPropeller)
                 {
+
                     //Calculate the thrust force based on the determined thrust strength, subtract from the current fuel
                     Vector2 thrustForce = transform.right * thrustStrength;
-                    currentFuel -= fuelBurnRate * Time.deltaTime;
+                    m_runtimeData.SubtractBoost(fuelBurnRate * Time.deltaTime);
 
                     //If we still have fuel, apply the thrust force
-                    if (currentFuel > 0)
+                    if (m_runtimeData.CurrentBoost > 0)
                         rb.AddForce(thrustForce);
                     
-                    Debug.Log("Fuel left: " + currentFuel);
+                    Debug.Log("Fuel left: " + m_runtimeData.CurrentBoost);
                 }
 
             }

@@ -74,6 +74,7 @@ public class DataPackage
     public float totalWater;
     public float currentWater;
     public float previousLevelWater;
+    public float currentDistance;
 
     //On construction, the package object should pull all of the information from the scriptable object.
     public DataPackage(SO_GameData sourceGameData)
@@ -81,5 +82,6 @@ public class DataPackage
         totalWater = sourceGameData.totalWater;
         currentWater = sourceGameData.currentWater;
         previousLevelWater = sourceGameData.previousLevelWater;
+        currentDistance = sourceGameData.currentDistance;
     }
 }
