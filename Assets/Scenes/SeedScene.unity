@@ -1881,6 +1881,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd23616c9d26bf046b6f95f91f027aab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiController: {fileID: 659501986}
+  m_rootElementID: BoostPanelRoot
   rotationSpeed: 50
   seedLauncher: {fileID: 1958088517}
   launchStrength: 5000

@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9c2bc721b4b27640af4ddabd0075089, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
+  m_boostCurrent: 100
+  m_boostMax: 100
   totalWater: 0
   currentWater: 0
   previousLevelWater: 0
+  currentDistance: 0
+  speed: 0
