@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 109950932}
   m_Layer: 0
   m_Name: SpawnWidth
-  m_TagString: EditorOnly
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -643,8 +643,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a856e9ff91679074d92113188b03069f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiDocument: {fileID: 599229869}
-  playerData: {fileID: 11400000, guid: 8d00abb93eacf5546ac8d5c047e42c6b, type: 2}
+  m_uiDocument: {fileID: 0}
+  m_playerDataTemplate: {fileID: 0}
 --- !u!114 &599229869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1650,6 +1650,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameData: {fileID: 11400000, guid: c0ccf0347186c494c8c39167b7086b82, type: 2}
+  defaultGameData: {fileID: 0}
 --- !u!114 &1824852834
 MonoBehaviour:
   m_ObjectHideFlags: 0
