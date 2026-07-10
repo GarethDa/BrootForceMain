@@ -9,7 +9,7 @@ public class SeedController : MonoBehaviour
     [SerializeField] UIController uiController;
     [SerializeField] string m_rootElementID;
     UIDocument m_uiDocument;
-    SO_GameData m_runtimeData;
+    [SerializeField] SO_GameData m_runtimeData;
 
     private PlayerInput playerInput;
     private bool usingPropeller = false;
@@ -50,7 +50,7 @@ public class SeedController : MonoBehaviour
 
         //Set the UI stuff at runtime
         m_uiDocument = GetComponent<UIDocument>();
-        m_runtimeData = uiController.RuntimePlayerData;
+        //m_runtimeData = uiController.RuntimePlayerData;
         VisualElement rootElement = m_uiDocument.rootVisualElement.Q<VisualElement>(m_rootElementID);
     }
 

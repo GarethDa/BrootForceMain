@@ -5,7 +5,7 @@ using Unity.Properties;
 public class SO_GameData : ScriptableObject
 {
     [SerializeField, DontCreateProperty] float m_boostCurrent = 100;
-    [SerializeField, DontCreateProperty] float m_boostMax = 100;
+    [SerializeField, DontCreateProperty] float m_boostMax = 1000;
 
 
     //Variables to be saved, any new variables to be saved should be added here and to the DataPackage object in SaveData.cs
@@ -44,20 +44,17 @@ public class SO_GameData : ScriptableObject
     [CreateProperty] public float boostPercentage => CurrentBoost / m_boostMax;
 
     //Resets all data back to default
-    public void ResetData()
+    public void ResetData(SO_GameData gameData)
     {
-        totalWater = 0f;
-        currentWater = 0f;
-        previousLevelWater = 0f;
-        currentDistance = 0f;
+        JsonUtility.FromJsonOverwrite(JsonUtility.ToJson(gameData), this);
     }
 
     //Loads data from a DataPackage object (e.g. the local object used to send data to and from the scriptable object)
-    public void LoadData(DataPackage package)
-    {
-        totalWater = package.totalWater;
-        currentWater = package.currentWater;
-        previousLevelWater = package.previousLevelWater;
-        currentDistance = package.currentDistance;
-    }
+    //public void LoadData(DataPackage package)
+    //{
+    //    totalWater = package.totalWater;
+    //    currentWater = package.currentWater;
+    //    previousLevelWater = package.previousLevelWater;
+    //    currentDistance = package.currentDistance;
+    //}
 }

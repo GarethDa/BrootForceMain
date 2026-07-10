@@ -292,6 +292,7 @@ GameObject:
   - component: {fileID: 195920725}
   - component: {fileID: 195920724}
   - component: {fileID: 195920726}
+  - component: {fileID: 195920727}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -344,6 +345,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerRef: {fileID: 1779320981}
   dataObject: {fileID: 11400000, guid: c0ccf0347186c494c8c39167b7086b82, type: 2}
+--- !u!114 &195920727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 195920723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a938e77d2881eb47a9028cb1ac18fc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameData: {fileID: 11400000, guid: c0ccf0347186c494c8c39167b7086b82, type: 2}
+  defaultGameData: {fileID: 11400000, guid: 57fe7ee6207cc81428d74dae9d078b00, type: 2}
 --- !u!1 &393682247
 GameObject:
   m_ObjectHideFlags: 0
@@ -1181,7 +1196,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 659501983}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a856e9ff91679074d92113188b03069f, type: 3}
   m_Name: 
@@ -1883,6 +1898,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiController: {fileID: 659501986}
   m_rootElementID: BoostPanelRoot
+  m_runtimeData: {fileID: 11400000, guid: c0ccf0347186c494c8c39167b7086b82, type: 2}
   rotationSpeed: 50
   seedLauncher: {fileID: 1958088517}
   launchStrength: 5000

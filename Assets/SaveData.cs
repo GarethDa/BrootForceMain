@@ -3,13 +3,17 @@ using UnityEngine;
 public class SaveData : MonoBehaviour
 {
     public SO_GameData gameData;
+    [SerializeField] SO_GameData defaultGameData;
+    private SO_GameData saveData;
 
     private void OnEnable()
     {
+        saveData = Instantiate(defaultGameData);
+
         //Subscribe the relevant methods to their corresponding events
         RootMovement.OnWaterCollected += UpdateWater;
         LevelManager.OnLevelEnded += EndLevel;
-        gameData.ResetData();
+        gameData.ResetData(defaultGameData);
     }
 
     private void Update()
@@ -23,15 +27,20 @@ public class SaveData : MonoBehaviour
         {
             LoadFromJson();
         }
+
+
     }
 
     public void SaveGame()
     {
-        DataPackage newPackage = new DataPackage(gameData);
+        //DataPackage newPackage = new DataPackage(gameData);
+        JsonUtility.FromJsonOverwrite(JsonUtility.ToJson(gameData), saveData);
 
         //Convert the game data to a json and get the dedicated savegame file path
-        string saveInfo = JsonUtility.ToJson(newPackage, true);
-        string filePath = Application.persistentDataPath + "/GameData.json";
+        
+        string saveInfo = JsonUtility.ToJson(saveData, true);
+        string filePath = Application.persistentDataPath + "/saveData.json";
+
 
         Debug.Log(filePath);
         System.IO.File.WriteAllText(filePath, saveInfo);
@@ -41,13 +50,14 @@ public class SaveData : MonoBehaviour
     public void LoadFromJson()
     {
         //Specify the file path and read the JSON located there
-        string filePath = Application.persistentDataPath + "/GameData.json";
+        string filePath = Application.persistentDataPath + "/saveData.json";
         string saveInfo = System.IO.File.ReadAllText(filePath);
 
-        DataPackage loadedPackage = JsonUtility.FromJson<DataPackage>(saveInfo);
+        JsonUtility.FromJsonOverwrite(saveInfo, saveData);
+        gameData.ResetData(saveData);
 
         //Assign the variables from the loaded package into the scriptable object
-        gameData.LoadData(loadedPackage);
+        //gameData.LoadData(loadedPackage);
 
         Debug.Log("Loaded");
     }
@@ -68,20 +78,20 @@ public class SaveData : MonoBehaviour
 
 //This is a local DataPackage object to be used for sending data between the savegame files and the scriptable object data holder.
 //Every time a new variable/object/etc. type needs to be tracked for save game data, it should be added here and to the scriptable object (e.g. SO_GameData).
-[System.Serializable]
-public class DataPackage
-{
-    public float totalWater;
-    public float currentWater;
-    public float previousLevelWater;
-    public float currentDistance;
+//[System.Serializable]
+//public class DataPackage
+//{
+//    public float totalWater;
+//    public float currentWater;
+//    public float previousLevelWater;
+//    public float currentDistance;
 
-    //On construction, the package object should pull all of the information from the scriptable object.
-    public DataPackage(SO_GameData sourceGameData)
-    {
-        totalWater = sourceGameData.totalWater;
-        currentWater = sourceGameData.currentWater;
-        previousLevelWater = sourceGameData.previousLevelWater;
-        currentDistance = sourceGameData.currentDistance;
-    }
-}
+//    //On construction, the package object should pull all of the information from the scriptable object.
+//    public DataPackage(SO_GameData sourceGameData)
+//    {
+//        totalWater = sourceGameData.totalWater;
+//        currentWater = sourceGameData.currentWater;
+//        previousLevelWater = sourceGameData.previousLevelWater;
+//        currentDistance = sourceGameData.currentDistance;
+//    }
+//}
