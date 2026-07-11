@@ -16,4 +16,9 @@ public class InteractiveType : MonoBehaviour
         Destroy(GetComponent<Collider2D>());
     }
 
+    public virtual void DestroyObject()
+    {
+        Destroy(gameObject);
+    }
+
 }

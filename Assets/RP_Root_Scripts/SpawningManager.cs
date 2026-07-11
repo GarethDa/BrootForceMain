@@ -146,6 +146,7 @@ public class SpawningManager : MonoBehaviour
                 {
                     //Instantiate the obstacle at the randomized position, make it a child of the obstacle holder
                     GameObject newObject = Instantiate(gObject, spawnPos, Quaternion.identity, obstacleHolder.transform);
+                    newObject.name += "_Chunk" + currentChunkNum; //Simple naming convention to make it easier to find things
                     
                     //Set the bounding radius. This makes it very simple to grab this radius for future overlap calculations
                     //instead of having to re-calculate it every time
@@ -156,8 +157,8 @@ public class SpawningManager : MonoBehaviour
 
                     if (moveType is not null)
                     {
-                        moveType.SetupPath(spawnPos);
-                        moveType.StartMoving();
+                        newObject.GetComponent<MovingObstacleType>().SetupPath(spawnPos);
+                        newObject.GetComponent<MovingObstacleType>().StartMoving();
                     }
 
                     //If we're working with a collectible here, set its value based on the scale

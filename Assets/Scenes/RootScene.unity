@@ -1650,7 +1650,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameData: {fileID: 11400000, guid: c0ccf0347186c494c8c39167b7086b82, type: 2}
-  defaultGameData: {fileID: 0}
+  defaultGameData: {fileID: 11400000, guid: 57fe7ee6207cc81428d74dae9d078b00, type: 2}
 --- !u!114 &1824852834
 MonoBehaviour:
   m_ObjectHideFlags: 0

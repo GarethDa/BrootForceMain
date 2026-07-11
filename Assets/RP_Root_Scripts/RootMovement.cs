@@ -75,11 +75,12 @@ public class RootMovement : MonoBehaviour
             if (breakThisFrame)
             {
                 currentObstacleStrength -= breakingStrength;
-
+                
+                //If the health of the obstacle being broken reaches 0, it's time to destroy it
                 if (currentObstacleStrength <= 0)
                 {
-                    breakingText.gameObject.SetActive(false);
-                    Destroy(currentObstacle);
+                    breakingText.gameObject.SetActive(false); //Disable the breaking text, we don't need it anymore
+                    currentObstacle.GetComponent<InteractiveType>().DestroyObject(); //Call the custome destroy for interactive objects
                     breakingObstacle = false;
                 }
 
